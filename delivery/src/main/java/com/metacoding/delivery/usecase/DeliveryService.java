@@ -11,12 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class DeliveryService implements SaveDeliveryUseCase, GetDeliveryUseCase, CancelDeliveryUseCase {
+public class DeliveryService implements CreateDeliveryUseCase, GetDeliveryUseCase, CancelDeliveryUseCase {
     private final DeliveryRepository deliveryRepository;
 
     @Override
     @Transactional
-    public DeliveryResponse saveDelivery(int orderId, String address) {
+    public DeliveryResponse createDelivery(int orderId, String address) {
         // 1. 배달 생성
         Delivery createdDelivery = deliveryRepository.save(Delivery.create(orderId, address));
         // 2. 배달 완료

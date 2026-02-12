@@ -11,13 +11,13 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/deliveries")
 public class DeliveryController {
-    private final SaveDeliveryUseCase saveDeliveryUseCase;
+    private final CreateDeliveryUseCase createDeliveryUseCase;
     private final GetDeliveryUseCase getDeliveryUseCase;
     private final CancelDeliveryUseCase cancelDeliveryUseCase;
 
     @PostMapping
     public ResponseEntity<?> createDelivery(@RequestBody DeliveryRequest requestDTO) {
-        return Resp.ok(saveDeliveryUseCase.saveDelivery(requestDTO.orderId(), requestDTO.address()));
+        return Resp.ok(createDeliveryUseCase.createDelivery(requestDTO.orderId(), requestDTO.address()));
     }
 
     @GetMapping("/{deliveryId}")
