@@ -16,4 +16,9 @@ public class OrderCommandConsumer {
     public void completeOrderCommand(CompleteOrderCommand command) {
         orderService.completeOrder(command.getOrderId());
     }
+
+    @KafkaListener(topics = "cancel-order-command", groupId = "order-service")
+    public void cancelOrderCommand(CancelOrderCommand command) {
+        orderService.cancelOrder(command.getOrderId());
+    }
 }

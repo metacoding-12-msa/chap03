@@ -70,6 +70,11 @@ public class OrderOrchestrator {
                     String.valueOf(orderId),
                     new CancelDeliveryCommand(orderId)
             );
+            kafkaTemplate.send(
+                    "cancel-order-command",
+                    String.valueOf(orderId),
+                    new CancelOrderCommand(orderId)
+            );
 
             states.remove(orderId); 
             return;
@@ -112,6 +117,11 @@ public class OrderOrchestrator {
                     );
                 }
             }
+            kafkaTemplate.send(
+                    "cancel-order-command",
+                    String.valueOf(orderId),
+                    new CancelOrderCommand(orderId)
+            );
             states.remove(orderId); 
             return;
         }
