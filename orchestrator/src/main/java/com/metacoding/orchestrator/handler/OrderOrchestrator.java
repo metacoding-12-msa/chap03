@@ -1,13 +1,13 @@
 package com.metacoding.orchestrator.handler;
 
-import com.metacoding.orchestrator.message.*; 
-import lombok.*; 
-import org.springframework.kafka.annotation.KafkaListener; 
-import org.springframework.kafka.core.KafkaTemplate; 
-import org.springframework.stereotype.Component; 
+import com.metacoding.orchestrator.message.*;
+import lombok.*;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap; 
+import java.util.concurrent.ConcurrentHashMap;
 
 @Component 
 @RequiredArgsConstructor 
@@ -64,12 +64,7 @@ public class OrderOrchestrator {
                     );
                 }
             }
-            // 배달 취소 명령 발행
-            kafkaTemplate.send(
-                    "cancel-delivery-command", 
-                    String.valueOf(orderId),
-                    new CancelDeliveryCommand(orderId)
-            );
+            // 실패 시 주문 취소
             kafkaTemplate.send(
                     "cancel-order-command",
                     String.valueOf(orderId),
@@ -117,6 +112,7 @@ public class OrderOrchestrator {
                     );
                 }
             }
+            // 실패 시 주문 취소
             kafkaTemplate.send(
                     "cancel-order-command",
                     String.valueOf(orderId),
